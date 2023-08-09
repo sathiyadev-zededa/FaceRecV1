@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entry Log</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1 class="page-heading">Entry Log</h1>
+    <div id="filter_container">
+        <label for="camera_id">Camera ID:</label>
+        <input type="text" id="camera_id" placeholder="Enter Camera ID">
+        <label for="start_time">Start Time:</label>
+        <input type="datetime-local" id="start_time">
+        <label for="end_time">End Time:</label>
+        <input type="datetime-local" id="end_time">
+        <button id="filter_btn">Filter</button>
+    </div>
+    <div class="table-container">
+        <table class="custom-table">
+            <tr>
+                <th>Camera ID</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Timestamp</th>
+            </tr>
+            {% for entry in log_entries %}
+            <tr>
+                <td>{{ entry.camera_id }}</td>
+                <td class="{% if entry.folder == 'Authorized' %}category-authorized{% elif entry.folder == 'Restricted' %}category-restricted{% endif %}">
+                    {{ entry.folder }}
+                </td>
+                <td>{{ entry.name }}</td>
+                <td>{{ entry.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#filter_btn").on("click", function () {
+                var cameraId = $("#camera_id").val();
+                var startTime = $("#start_time").val();
+                var endTime = $("#end_time").val();
+
+                // Encode the camera ID, start time, and end time before appending to the URL
+                cameraId = encodeURIComponent(cameraId);
+                startTime = encodeURIComponent(startTime);
+                endTime = encodeURIComponent(endTime);
+
+                var url = `/get_log_entries?camera_id=${cameraId}&start_time=${startTime}&end_time=${endTime}`;
+                
+                // Redirect to the filtered log_entries route
+                window.location.href = url;
+            });
+        });
+    </script>
+</body>
+</html>
