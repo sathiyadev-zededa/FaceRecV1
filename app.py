@@ -194,4 +194,4 @@ if __name__ == '__main__':
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     output_file = os.path.join(output_folder, f'output_log_{timestamp}.txt')
 
-    app.run(host='0.0.0.0', port=5050, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
