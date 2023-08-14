@@ -16,6 +16,7 @@
         <button id="filter_btn">Filter</button>
     </div>
     <div class="table-container">
+        {% if log_entries %}
         <table class="custom-table">
             <tr>
                 <th>Camera ID</th>
@@ -34,6 +35,9 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <p>No entries found</p>
+        {% endif %}
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
