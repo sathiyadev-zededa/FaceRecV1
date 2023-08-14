@@ -133,17 +133,20 @@ def log_entries():
 
     try:
         log_entries = []  # Initialize an empty list to store the log entries
-        # Reading log entries from the output file and populate log_entries list
-        with open(output_file, 'r') as log_file:
-            for line in log_file:
-                entry_info = re.findall(r'(.+): (.+) entered at: (.+) \(Camera ID: (.+)\)', line.strip())
-                if entry_info:
-                    folder, name, timestamp_str, camera_id = entry_info[0]
-                    timestamp = datetime.datetime.strptime(timestamp_str, '%a %b %d %H:%M:%S %Y')
-                    log_entries.append({'folder': folder, 'name': name, 'timestamp': timestamp, 'camera_id': camera_id})
 
-        # Sort log entries by timestamp in descending order
-        log_entries.sort(key=lambda x: x['timestamp'], reverse=True)
+        # Check if the log file exists before trying to read from it
+        if os.path.exists(output_file):
+            # Reading log entries from the output file and populate log_entries list
+            with open(output_file, 'r') as log_file:
+                for line in log_file:
+                    entry_info = re.findall(r'(.+): (.+) entered at: (.+) \(Camera ID: (.+)\)', line.strip())
+                    if entry_info:
+                        folder, name, timestamp_str, camera_id = entry_info[0]
+                        timestamp = datetime.datetime.strptime(timestamp_str, '%a %b %d %H:%M:%S %Y')
+                        log_entries.append({'folder': folder, 'name': name, 'timestamp': timestamp, 'camera_id': camera_id})
+
+            # Sort log entries by timestamp in descending order
+            log_entries.sort(key=lambda x: x['timestamp'], reverse=True)
 
         return render_template('log_entries.html', log_entries=log_entries)
     except Exception as e:
