@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1 class="page-heading">Log Viewer</h1>
+
+    <div id="filter_container">
+        <form method="post">
+            <label for="search_name">Search by Name:</label>
+            <input type="text" id="search_name" name="search_name">
+            <label for="start_time">Start Time:</label>
+            <input type="datetime-local" id="start_time" name="start_time">
+            <label for="end_time">End Time:</label>
+            <input type="datetime-local" id="end_time" name="end_time">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table class="custom-table">
+            <tr class="heading-row">
+                <th class="heading-row">Name</th>
+                <th class="heading-row">Category</th>
+                <th class="heading-row">Time</th>
+                <th class="heading-row">Camera ID</th>
+            </tr>
+            {% if entries %}
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry['Name'] }}</td>
+                    <td class="category-{{ entry['Category']|lower }}">{{ entry['Category'] }}</td>
+                    <td>{{ entry['Time'] }}</td>
+                    <td>{{ entry['Camera ID'] }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No log entries</td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+</body>
+</html>

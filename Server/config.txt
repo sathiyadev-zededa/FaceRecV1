@@ -1,0 +1,4 @@
+bucketname=facerecognition-zededa
+access_key=AKIA5ASNECEB7AMG2ANI
+secret_password=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
+port=8080
