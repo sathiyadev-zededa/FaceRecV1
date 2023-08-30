@@ -1,5 +1,5 @@
 #!/bin/bash
-code_path="/home/jeet/FaceRecVer.2/Server"
+code_path="/home/jeet/v1/FaceRecV1/Server"
 cmd="cd ${code_path}"
 eval $cmd
 `touch test`
